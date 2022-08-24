@@ -309,4 +309,6 @@ private val realData = listOf(
         name = "Я бы"
         format = ContentFormat.TXT
     }
-)
+).map {
+    it.copy(contentWidthMultiplier = 0.6)
+}
