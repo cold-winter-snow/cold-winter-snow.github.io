@@ -29,6 +29,7 @@ import org.jetbrains.compose.web.css.marginLeft
 import org.jetbrains.compose.web.css.marginRight
 import org.jetbrains.compose.web.css.padding
 import org.jetbrains.compose.web.css.paddingLeft
+import org.jetbrains.compose.web.css.paddingRight
 import org.jetbrains.compose.web.css.paddingTop
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.pt
@@ -53,9 +54,10 @@ import org.jetbrains.compose.web.dom.Ul
 @Composable
 fun Site() {
     val routing = remember { Routing() }
+    val (contentLoaded, onContentLoadedUpdate) = remember { mutableStateOf(false) }
     Head(routing)
-    Main(routing)
-    Foot()
+    Main(routing, onContentLoadedUpdate)
+    Foot(routing, contentLoaded)
 }
 
 @Composable
@@ -97,14 +99,15 @@ fun Head(routing: Routing) {
 }
 
 @Composable
-fun Foot() {
+fun Foot(routing: Routing, contentLoaded: Boolean) {
     Footer(attrs = {
         style {
             textAlign("center")
         }
     }) {
         Container {
-            if (Const.SHOW_FOOTER_CONTENT) {
+            val ready = routing.route !is Route.Content || contentLoaded
+            if (Const.SHOW_FOOTER_CONTENT && ready) {
                 Ul(attrs = {
                     style {
                         padding(3.em)
@@ -143,7 +146,7 @@ fun Foot() {
 }
 
 @Composable
-fun Main(routing: Routing) {
+fun Main(routing: Routing, onContentLoadedUpdate: (Boolean) -> Unit) {
     when (val route = routing.route) {
         is Route.Root -> {
             val items = remember {
@@ -156,7 +159,7 @@ fun Main(routing: Routing) {
             val info = remember {
                 Registry.content.getValue(route.id)
             }
-            ContentView(info)
+            ContentView(info, onContentLoadedUpdate)
         }
     }
 }
@@ -229,12 +232,12 @@ fun NotFound() {
 }
 
 @Composable
-fun ContentView(info: ContentInfo) {
+fun ContentView(info: ContentInfo, onContentLoadedUpdate: (Boolean) -> Unit) {
     val state = loadContent(info)
     when (val result = state.value) {
         is LoadResult.Loading -> Loading()
         is LoadResult.Fail -> FailedToLoad()
-        is LoadResult.Success -> ContentView(info, result.content)
+        is LoadResult.Success -> ContentView(info, result.content, onContentLoadedUpdate)
     }
 }
 
@@ -276,7 +279,7 @@ fun FailedToLoad() {
 }
 
 @Composable
-fun ContentView(info: ContentInfo, content: Content) {
+fun ContentView(info: ContentInfo, content: Content, onContentLoadedUpdate: (Boolean) -> Unit) {
     Article {
         Container(widthMultiplier = info.contentWidthMultiplier) {
             if (info.hideTitle || info.format != ContentFormat.TXT) {
@@ -308,8 +311,10 @@ fun ContentView(info: ContentInfo, content: Content) {
                         rendered.run { attrs() }
                         ref {
                             it.innerHTML = rendered.html
+                            onContentLoadedUpdate(true)
                             onDispose {
                                 it.innerHTML = ""
+                                onContentLoadedUpdate(false)
                             }
                         }
                     }) { }
@@ -318,14 +323,13 @@ fun ContentView(info: ContentInfo, content: Content) {
             if (info.source != null) {
                 Div(attrs = {
                     style {
+                        paddingTop(1.em)
                         width(100.percent)
                         textAlign("right")
                     }
                 }) {
                     A(info.source.url.href, attrs = {
                         style {
-                            paddingTop(1.5.em)
-                            paddingLeft(1.em)
                             color(Color.black)
                         }
                     }) {
