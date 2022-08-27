@@ -8,11 +8,14 @@ import content.contentInfo
 object Const {
     const val TITLE = "Слова"
     const val EMAIL = "justeveho@gmail.com"
-    const val GITHUB = "https://github.com/winter-yuki"
+    const val GITHUB = "https://github.com/cold-winter-snow"
     const val NOT_FOUND = "Page not found"
     const val LOADING = "Loading..."
     const val LOAD_FAILED = "Failed to load content. Please contact with developer $EMAIL"
     const val SHOW_FOOTER_CONTENT = false
+    const val STATUS_UPDATING = "Regularly updated"
+    const val STATUS_DRAFT = "Draft"
+    const val SOURCE = "source"
 }
 
 object Registry {
@@ -74,6 +77,7 @@ private val testData = listOf(
         format = ContentFormat.MD
         location = "https://raw.githubusercontent.com/JetBrains/kotlin/master/ReadMe.md"
         status = ContentUpdateStatus.Continuous
+        source = "https://github.com/JetBrains/kotlin"
     },
 )
 
