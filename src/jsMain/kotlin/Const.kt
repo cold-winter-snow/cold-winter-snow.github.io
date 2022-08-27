@@ -2,11 +2,17 @@ import content.ContentAccess
 import content.ContentFormat
 import content.ContentId
 import content.ContentInfo
+import content.ContentUpdateStatus
 import content.contentInfo
 
 object Const {
     const val TITLE = "Слова"
     const val EMAIL = "justeveho@gmail.com"
+    const val GITHUB = "https://github.com/winter-yuki"
+    const val NOT_FOUND = "Page not found"
+    const val LOADING = "Loading..."
+    const val LOAD_FAILED = "Failed to load content. Please contact with developer $EMAIL"
+    const val SHOW_FOOTER_CONTENT = false
 }
 
 object Registry {
@@ -33,7 +39,7 @@ private val testData = listOf(
     contentInfo {
         access = ContentAccess.Common
         name = "test1"
-        date = "15.08.2022"
+        status = ContentUpdateStatus.Done("15.08.2022")
         format = ContentFormat.TXT
         hideTitle = true
     },
@@ -45,7 +51,7 @@ private val testData = listOf(
         title = "Very interesting article"
         access = ContentAccess.Common
         name = "test3"
-        date = "15.08.2022"
+        status = ContentUpdateStatus.Draft
         format = ContentFormat.MD
     },
     contentInfo {
@@ -53,6 +59,7 @@ private val testData = listOf(
         name = "test2"
         format = ContentFormat.TXT
         permanentShortNames.add("short")
+        status = ContentUpdateStatus.Draft
     },
     contentInfo {
         title = "Failed to load data"
@@ -63,9 +70,10 @@ private val testData = listOf(
     contentInfo {
         title = "Kotlin"
         access = ContentAccess.Common
-        name = "ReadMe"
+        name = "kotlin"
         format = ContentFormat.MD
         location = "https://raw.githubusercontent.com/JetBrains/kotlin/master/ReadMe.md"
+        status = ContentUpdateStatus.Continuous
     },
 )
 

@@ -15,7 +15,10 @@ import content.ContentFormat
 import content.ContentInfo
 import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.DisplayStyle
+import org.jetbrains.compose.web.css.JustifyContent
+import org.jetbrains.compose.web.css.StyleScope
 import org.jetbrains.compose.web.css.backgroundColor
+import org.jetbrains.compose.web.css.backgroundImage
 import org.jetbrains.compose.web.css.border
 import org.jetbrains.compose.web.css.color
 import org.jetbrains.compose.web.css.display
@@ -23,27 +26,32 @@ import org.jetbrains.compose.web.css.em
 import org.jetbrains.compose.web.css.fontSize
 import org.jetbrains.compose.web.css.fontWeight
 import org.jetbrains.compose.web.css.height
+import org.jetbrains.compose.web.css.justifyContent
 import org.jetbrains.compose.web.css.marginLeft
+import org.jetbrains.compose.web.css.marginRight
+import org.jetbrains.compose.web.css.marginTop
 import org.jetbrains.compose.web.css.padding
 import org.jetbrains.compose.web.css.paddingLeft
 import org.jetbrains.compose.web.css.paddingTop
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.pt
 import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.css.rgb
 import org.jetbrains.compose.web.css.textAlign
 import org.jetbrains.compose.web.css.textDecoration
 import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Article
+import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Footer
 import org.jetbrains.compose.web.dom.H2
 import org.jetbrains.compose.web.dom.Header
+import org.jetbrains.compose.web.dom.Li
 import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Section
 import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.dom.Ul
 
 @Composable
 fun Site() {
@@ -57,7 +65,7 @@ fun Site() {
 fun Head(routing: Routing) {
     Header(attrs = {
         style {
-            backgroundColor(rgb(251, 127, 220))
+            backgroundImage("linear-gradient(#FB77FF, white)")
             if (routing.route.isRoot) {
                 height(15.em)
             } else {
@@ -69,15 +77,15 @@ fun Head(routing: Routing) {
             A(routing.url(null), attrs = {
                 style {
                     if (routing.route.isRoot) {
-                        paddingTop(1.em)
+                        paddingTop(0.7.em)
                         fontSize(5.em)
                     } else {
-                        paddingTop(0.5.em)
+                        paddingTop(0.3.em)
                         fontSize(3.em)
                     }
                     marginLeft(1.em)
-                    fontWeight("bold")
-                    color(Color.white)
+                    fontWeight("300")
+                    color(Color("#565656"))
                     textDecoration("none")
                     display(DisplayStyle.Block)
                 }
@@ -95,10 +103,52 @@ fun Head(routing: Routing) {
 fun Foot() {
     Footer(attrs = {
         style {
-            height(100.px)
+            height(8.em)
         }
     }) {
-        Text("")
+        Container {
+            if (Const.SHOW_FOOTER_CONTENT) {
+                Div(attrs = {
+                    style {
+                        textAlign("center")
+                    }
+                }) {
+                    Ul(attrs = {
+                        style {
+                            paddingTop(2.em)
+                            paddingLeft(0.em)
+                            display(DisplayStyle.InlineBlock)
+                        }
+                    }) {
+                        fun StyleScope.li() {
+                            property("float", "left")
+                            display(DisplayStyle.Block)
+                        }
+                        Li(attrs = {
+                            style {
+                                li()
+                                marginRight(2.em)
+                            }
+                        }) {
+                            Text(Const.EMAIL)
+                        }
+                        Li(attrs = {
+                            style {
+                                li()
+                            }
+                        }) {
+                            A(Const.GITHUB, attrs = {
+                                style {
+                                    color(Color.black)
+                                }
+                            }) {
+                                Text("github")
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -124,7 +174,7 @@ fun Main(routing: Routing) {
 @Composable
 fun ItemsView(routing: Routing, items: Iterable<ContentInfo>) {
     Section {
-        Container {
+        Container(widthMultiplier = 0.8) {
             items.forEach { item ->
                 key(item) {
                     Item(item, routing)
@@ -138,8 +188,7 @@ fun ItemsView(routing: Routing, items: Iterable<ContentInfo>) {
 fun Item(info: ContentInfo, routing: Routing) {
     Div(attrs = {
         style {
-            paddingLeft(40.px)
-            paddingTop(14.px)
+            paddingTop(1.em)
             width(100.percent)
             textAlign("left")
             backgroundColor(Color.white)
@@ -166,7 +215,7 @@ fun Item(info: ContentInfo, routing: Routing) {
                 color(Color.darkgray)
             }
         }) {
-            Text(info.date.toString())
+            Text(info.status.toString())
         }
     }
 }
@@ -183,7 +232,7 @@ fun NotFound() {
                     attr("margin", "0 auto")
                 }
             }) {
-                Text("Страница не найдена")
+                Text(Const.NOT_FOUND)
             }
         }
     }
@@ -213,7 +262,7 @@ fun Loading() {
                         fontSize(25.px)
                     }
                 }) {
-                    Text("Loading...")
+                    Text(Const.LOADING)
                 }
             }
         }
@@ -230,7 +279,7 @@ fun FailedToLoad() {
                     fontSize(25.px)
                 }
             }) {
-                Text("Failed to load content. Please contact with developer ${Const.EMAIL}")
+                Text(Const.LOAD_FAILED)
             }
         }
     }
@@ -256,7 +305,9 @@ fun ContentView(info: ContentInfo, content: Content) {
             }
             when (val rendered = render(info.id, content)) {
                 is RenderingResult.Plain -> {
-                    P(attrs = { rendered.run { attrs() } }) {
+                    P(attrs = {
+                        rendered.run { attrs() }
+                    }) {
                         content.v.lines().forEach {
                             Line(it)
                         }
@@ -280,12 +331,6 @@ fun ContentView(info: ContentInfo, content: Content) {
 
 @Composable
 fun Line(line: String) {
-    Div(attrs = {
-        style {
-            fontSize(12.pt)
-            padding(0.9.pt)
-        }
-    }) {
-        Text(line)
-    }
+    Text(line)
+    Br()
 }
