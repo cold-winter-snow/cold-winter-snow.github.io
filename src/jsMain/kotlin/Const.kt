@@ -4,6 +4,7 @@ import content.ContentId
 import content.ContentInfo
 import content.ContentUpdateStatus
 import content.contentInfo
+import org.jetbrains.compose.web.css.em
 
 object Const {
     const val TITLE = "Слова"
@@ -275,5 +276,5 @@ private val realData = listOf(
         format = ContentFormat.TXT
     }
 ).map {
-    it.copy(contentWidthMultiplier = 0.65)
+    it.copy(contentWidth = 32.5.em)
 }
