@@ -131,7 +131,9 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         hideTitle = true
+        title = "Цвета чернил"
         name = "5"
         format = ContentFormat.TXT
     },
@@ -152,7 +154,9 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Extended
         hideTitle = true
+        title = "Последняя надежда"
         name = "9"
         format = ContentFormat.TXT
     },
@@ -168,36 +172,43 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         hideTitle = true
         name = "в никуда"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Extended
         hideTitle = true
         name = "В синем небе"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Extended
         hideTitle = true
         name = "В сто тысяч первый раз"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Extended
         hideTitle = true
         name = "В тот вечер растворились звёзды"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         hideTitle = true
         name = "В тумане пустынных видений"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         hideTitle = true
         name = "Выход"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         hideTitle = true
         name = "Где"
         format = ContentFormat.TXT
@@ -213,6 +224,7 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         hideTitle = true
         name = "ждать"
         format = ContentFormat.TXT
@@ -233,6 +245,7 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         name = "Молитвы неизвестному"
         format = ContentFormat.TXT
     },
@@ -245,11 +258,15 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
+        hideTitle = true
         name = "Одинокий монумент"
         format = ContentFormat.TXT
     },
     contentInfo {
-        name = "Он кидал сердце в небо"
+        access = ContentAccess.Common
+        hideTitle = true
+        name = "В небо"
         format = ContentFormat.TXT
     },
     contentInfo {
@@ -257,10 +274,20 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
+        hideTitle = true
         name = "Поэзия"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
+        hideTitle = true
+        name = "пропасть"
+        format = ContentFormat.TXT
+    },
+    contentInfo {
+        access = ContentAccess.Common
+        hideTitle = true
         name = "Сказки уходят"
         format = ContentFormat.TXT
     },
@@ -269,30 +296,41 @@ private val realData = listOf(
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Extended
+        hideTitle = true
         name = "Смерти путь"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
         name = "Строки"
         format = ContentFormat.TXT
     },
     contentInfo {
-        name = "Зачем писать заметки в телефоне"
+        hideTitle = true
+        name = "Тише рыбы, бесшумней звезды"
         format = ContentFormat.TXT
     },
     contentInfo {
+        hideTitle = true
         name = "Только лишь вслед"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Extended
+        hideTitle = true
         name = "Ты забыл"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
+        hideTitle = true
         name = "Ты неисправим"
         format = ContentFormat.TXT
     },
     contentInfo {
+        access = ContentAccess.Common
+        hideTitle = true
         name = "Это же прошлое"
         format = ContentFormat.TXT
     },
