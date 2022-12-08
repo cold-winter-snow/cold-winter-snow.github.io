@@ -121,8 +121,7 @@ private val common = listOf(
     },
     contentInfo {
         access = ContentAccess.Common
-        hideTitle = true
-        name = "В тумане пустынных видений"
+        name = "Тени"
         format = ContentFormat.TXT
     },
     contentInfo {
