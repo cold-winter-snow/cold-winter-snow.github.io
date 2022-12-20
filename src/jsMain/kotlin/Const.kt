@@ -184,6 +184,10 @@ private val common = listOf(
         name = "Это же прошлое"
         format = ContentFormat.TXT
     },
+    contentInfo {
+        name = "снег"
+        format = ContentFormat.TXT
+    },
 ).map { it.copy(access = ContentAccess.Common) }
 
 private val extended = listOf<ContentInfo>().map { it.copy(access = ContentAccess.Extended) }
