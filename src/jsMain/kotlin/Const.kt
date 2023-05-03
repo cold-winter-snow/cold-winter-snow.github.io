@@ -63,6 +63,7 @@ private val testData = listOf(
     contentInfo {
         access = ContentAccess.Extended
         name = "test2"
+        access = ContentAccess.Common
         format = ContentFormat.TXT
         permanentShortNames.add("short")
         status = ContentUpdateStatus.Draft
